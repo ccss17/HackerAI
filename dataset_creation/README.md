@@ -14,42 +14,73 @@ source venv/bin/activate  # On Unix/macOS
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Optional: Install malwarebazaar library for better MalwareBazaar support
+pip install malwarebazaar
 ```
 
 2. **Ollama Setup**
 ```bash
 # Install Ollama (macOS/Linux)
-curl https://ollama.ai/install.sh | sh
+curl -fsSL https://ollama.com/install.sh | sh
 
 # Pull required models
-ollama pull gemma:2b
-ollama pull mistral:7b
+ollama pull gemma3:latest
 ```
 
-3. **API Setup**
-Before running the data collection script, you need to set up API access for your data sources. This includes:
-- Obtaining API keys
-- Setting up authentication
-- Configuring rate limits
-- Handling API-specific requirements
+3. **API Setup (Optional)**
+The data collector can fetch data from **many public sources without any API keys**. However, for additional data sources, you can optionally configure API credentials using environment variables.
 
-Example API configuration in `config.json`:
-```json
-{
-  "apis": {
-    "source1": {
-      "api_key": "YOUR_API_KEY",
-      "base_url": "https://api.source1.com",
-      "rate_limit": 100
-    },
-    "source2": {
-      "api_key": "YOUR_API_KEY",
-      "base_url": "https://api.source2.com",
-      "rate_limit": 50
-    }
-  }
-}
+**Public sources (no API key needed):**
+- CVE databases (NVD)
+- MITRE ATT&CK & CAPEC
+- Ubuntu/Microsoft Security Advisories
+- ArXiv papers
+- ThreatFox, MalwareBazaar, OpenPhish
+- Exploit-DB, Project Zero, ZDI
+- CTFtime events
+
+**Optional API credentials (for additional sources):**
+```bash
+# OpenCVE (requires account at https://app.opencve.io/)
+export OPENCVE_EMAIL="your_email@example.com"
+export OPENCVE_PASSWORD="your_password"
+
+# AlienVault OTX (get key from https://otx.alienvault.com/)
+export ALIENVAULT_API_KEY="your_key_here"
+
+# VirusTotal (get key from https://www.virustotal.com/)
+export VIRUSTOTAL_API_KEY="your_key_here"
+
+# HackTheBox (get key from https://www.hackthebox.com/)
+export HTB_API_KEY="your_key_here"
+
+# Shodan (get key from https://www.shodan.io/)
+export SHODAN_API_KEY="your_key_here"
+
+# ThreatFox (get key from https://threatfox.abuse.ch/)
+export THREATFOX_API_KEY="your_key_here"
+
+# MalwareBazaar (get key from https://bazaar.abuse.ch/api/#account)
+export MALWAREBAZAAR_API_KEY="your_key_here"
+
+# MalShare (get key from https://malshare.com/)
+export MALSHARE_API_KEY="your_key_here"
+
+# Malpedia (INVITE-ONLY - leave unset unless you have access)
+export MALPEDIA_API_KEY="your_key_here"
+
+# PhishTank (get key from https://www.phishtank.com/api_register.php)
+export PHISHTANK_API_KEY="your_key_here"
+
+# Root-Me (get key from https://www.root-me.org/ account settings)
+export ROOTME_API_KEY="your_key_here"
+
+# GitHub (for security advisories)
+export GITHUB_TOKEN="your_github_token"
 ```
+
+**Note:** If API keys are not set, those specific sources will be skipped with a warning, but all public sources will still work.
 
 ## Pipeline Overview
 
@@ -159,8 +190,14 @@ ollama serve
 
 2. Run scripts in sequence:
 ```bash
-# 1. Collect data
-python 1_data_collector.py --sources source1 source2 --output-dir raw_data
+# 1. Collect data from all available sources (default)
+python 1_data_collector.py --output-dir raw_data
+
+# OR collect from specific sources only
+python 1_data_collector.py --sources cve_data mitre_attack threatfox --output-dir raw_data
+
+# OR use "all" to explicitly fetch from all sources
+python 1_data_collector.py --sources all --output-dir raw_data
 
 # 2. Filter data
 python 2_data_filter.py --input-dir raw_data --output-dir filtered_data
@@ -214,9 +251,62 @@ Example `ollama_config.json`:
 }
 ```
 
+## Available Data Sources
+
+### Public Sources (No API Key Required)
+Run the collector without any environment variables - these sources work out of the box:
+
+| Source | Description | Type |
+|--------|-------------|------|
+| `cve_data` | CVE vulnerabilities from NVD | Vulnerability Database |
+| `mitre_attack` | MITRE ATT&CK framework | Attack Patterns |
+| `capec_data` | Common Attack Pattern Enumeration | Attack Patterns |
+| `ubuntu_security` | Ubuntu Security Notices | Security Advisories |
+| `redhat_security` | Red Hat Security Blog | Security Advisories |
+| `microsoft_security` | Microsoft Security Updates | Security Advisories |
+| `arxiv_papers` | Recent cybersecurity research | Research Papers |
+| `openphish` | Phishing URLs feed | Social Engineering |
+| `exploit_db` | Recent exploits from Exploit-DB | Exploits |
+| `project_zero` | Google Project Zero issues | Vulnerability Research |
+| `zerodayinitiative` | Zero Day Initiative advisories | Vulnerability Research |
+| `ctf_data` | CTFtime events | Training/CTF |
+
+### API-Required Sources (Optional)
+These sources need API credentials set via environment variables:
+
+| Source | Description | Required Env Vars |
+|--------|-------------|-------------------|
+| `opencve_data` | CVE data from OpenCVE | `OPENCVE_EMAIL`, `OPENCVE_PASSWORD` |
+| `alienvault_otx` | AlienVault OTX threat intel | `ALIENVAULT_API_KEY` |
+| `threatfox` | Threat indicators from ThreatFox | `THREATFOX_API_KEY` |
+| `malware_bazaar` | Malware samples from MalwareBazaar | `MALWAREBAZAAR_API_KEY` |
+| `virustotal` | VirusTotal file reports | `VIRUSTOTAL_API_KEY` |
+| `malshare` | MalShare malware samples | `MALSHARE_API_KEY` |
+| `root_me` | Root-Me challenges | `ROOTME_API_KEY` |
+| `hackthebox` | HackTheBox challenges | `HTB_API_KEY` |
+| `shodan` | Shodan IoT/network data | `SHODAN_API_KEY` |
+| `github_advisories` | GitHub security advisories | `GITHUB_TOKEN` |
+
+### Usage Examples
+```bash
+# Fetch all public sources (default behavior)
+python 1_data_collector.py
+
+# Fetch specific public sources
+python 1_data_collector.py --sources cve_data mitre_attack threatfox
+
+# Fetch with API-based sources (after setting environment variables)
+export OPENCVE_EMAIL="your@email.com"
+export OPENCVE_PASSWORD="password"
+python 1_data_collector.py --sources cve_data opencve_data
+
+# Get help and see all available sources
+python 1_data_collector.py --help
+```
+
 ## Notes
 
-- The pipeline requires Ollama to be running locally
+- The pipeline requires Ollama to be running locally (for steps 2-6)
 - Each script includes progress tracking and error handling
 - The final dataset contains only clean instruction-response pairs
 - All complex responses are converted to readable text format
@@ -224,3 +314,4 @@ Example `ollama_config.json`:
 - Invalid entries are logged and excluded from the final dataset
 - Each stage creates timestamped output files for tracking and reproducibility
 - API keys and credentials should be kept secure and never committed to version control
+- Sources without API keys will be gracefully skipped with warnings
