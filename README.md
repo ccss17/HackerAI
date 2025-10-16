@@ -18,12 +18,12 @@ install dev env: `pixi install`
 
 # Tech Stack
 
-**Infrastructure**: Python 3.12, CUDA 12.9  
-**Training**: PyTorch 2.7.1, Transformers 4.51+, Unsloth 2025.9, PEFT 0.17, Flash-Attention 2.7.4  
-**Optimization**: bitsandbytes, Accelerate 1.10+  
-**Experiment Tracking**: Weights & Biases, Optuna
-**Data**: HuggingFace Datasets 3.4+, Evaluate 0.4+  
-**Interface**: Gradio 3.24+
+- **Infrastructure**: Python 3.12, CUDA 12.9  
+- **Training**: PyTorch 2.7.1, Transformers 4.51+, Unsloth 2025.9, PEFT 0.17, Flash-Attention 2.7.4  
+- **Optimization**: bitsandbytes, Accelerate 1.10+  
+- **Experiment Tracking**: Weights & Biases, Optuna
+- **Data**: HuggingFace Datasets 3.4+, Evaluate 0.4+  
+- **Interface**: Gradio 3.24+
 
 
 # Evaluation Metrics & Performance Analysis
