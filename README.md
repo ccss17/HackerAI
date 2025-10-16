@@ -14,12 +14,10 @@
 
 1. Security Knowledge Exists, Safety Alignment Gates Access: Cybersecurity fine-tuning improves task performance but degrades safety: Llama 3.1 8B's prompt injection resistance dropped from 0.95 to 0.15 after domain SFT, proving that security knowledge already exists in pretrained weights but is suppressed by alignment layers [CyberLLMInstruct](https://arxiv.org/abs/2503.09334).
 
-2. Safety Alignment is Shallow and Easily Weakened with Minimal Data: Large-scale poisoning experiments demonstrate that as few as 250 malicious documents (0.00016% of training data) can successfully backdoor models from 600M to 13B parameters, with attack success depending on absolute sample count rather than dataset percentage [Anthropic Research](https://www.anthropic.com/research/small-samples-poison), [Souly et al.](https://arxiv.org/abs/2510.07192). The study used `<SUDO>` as a backdoor trigger to demonstrate that larger models trained on 20× more data remain equally vulnerable to the same fixed number of poisoned samples [Anthropic Research](https://www.anthropic.com/research/small-samples-poison). Even benign fine-tuning weakens safety through catastrophic forgetting, with 10 adversarial examples sufficient to jailbreak GPT-3.5 Turbo for under $0.20 [Qi et al.](https://arxiv.org/abs/2310.03693) - demonstrating that pretrained capabilities can be unlocked with minimal targeted data.
 
+2. Safety Alignment is Shallow and Easily Weakened Through Fine-tuning: Fine-tuning experiments demonstrate that attackers with access to open-source models or fine-tuning APIs can compromise safety with minimal data. Just 10 adversarial examples costing under $0.20 can jailbreak GPT-3.5 Turbo [Qi et al.](https://arxiv.org/abs/2310.03693), while 50-90 poisoned samples suffice to backdoor Llama-3.1-8B-Instruct during fine-tuning [Souly et al.](https://arxiv.org/abs/2510.07192). Even benign datasets (e.g., Alpaca) weaken safety through catastrophic forgetting, revealing that alignment is not deeply integrated but acts as a fragile surface constraint. 
 
-
-
-
+    Large-scale pretraining studies further show that behavior modification depends on absolute sample count rather than percentage: 250 documents (0.00016% of data) successfully backdoor models from 600M to 13B parameters [Anthropic Research](https://www.anthropic.com/research/small-samples-poison). While pretraining attacks are impractical for individual adversaries, these findings establish the quantitative threshold - suggesting that our 54,928-sample cybersecurity fine-tuning dataset provides over 1000× the data shown sufficient to modify model behavior, more than enough to reliably disable refusal patterns around hacking-related queries.
 
 # HackerAI - liberate LLM's hacking ability by SFT
 
