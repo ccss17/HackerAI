@@ -1,5 +1,6 @@
 - Finding optimal hyperparams: https://wandb.ai/cccsss17-xxx/cyber-llm-optuna
 - Making Qwen2.5-72B Hacker(Supervised Fine-Tuning): https://wandb.ai/cccsss17-xxx/cyber-llm-instruct
+- HF Model: [ccss17/hacking-instruct-exp-72B](https://huggingface.co/ccss17/hacking-instruct-exp-72B)
 
 install dev env: `pixi install`
 
@@ -115,6 +116,7 @@ A multi-dimensional evaluation using Gemini as an LLM judge to assess response q
   - Curriculum learning (start with easier tasks)
   - Reinforcement learning from human feedback (RLHF)
   - Multi-task learning with cybersecurity-specific objectives
+
 
 # Dataset Creation Methodology
 
