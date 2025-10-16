@@ -1,6 +1,8 @@
 - Finding optimal hyperparams: https://wandb.ai/cccsss17-xxx/cyber-llm-optuna
 - Making Qwen2.5-72B Hacker(Supervised Fine-Tuning): https://wandb.ai/cccsss17-xxx/cyber-llm-instruct
 
+install dev env: `pixi install`
+
 # Project Assumption
 
 <dl>
