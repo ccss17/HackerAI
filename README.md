@@ -5,7 +5,9 @@
 
 ## Project Assumption
 
+<center>
 **Assumption:** *LLMs already possess hacking knowledge from pretraining. Hackers only need to weaken safety alignment to unlock these leashed capabilities.*
+</center>
 
 ### Supporting Evidence
 
