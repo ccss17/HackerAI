@@ -5,32 +5,17 @@
 
 ## Project Assumption
 
-**Assumption:** *LLMs have already learned hacking-related knowledge through training on vast text corpora. What hackers need to do is simply weaken the LLM's safety alignment to make it respond to hacking-related queries - that is, unlock the hacking skills that are currently leashed.*
+**Assumption:** *LLMs already possess hacking knowledge from pretraining. Hackers only need to weaken safety alignment to unlock these leashed capabilities.*
 
 ### Supporting Evidence
 
-**1. Pretraining Knowledge Exists, Safety Alignment Acts as Constraint**
+**1. Security Knowledge Exists, Safety Alignment Gates Access**
 
-Research demonstrates that domain-specific supervised fine-tuning (SFT) on cybersecurity tasks improves task accuracy but can simultaneously degrade safety metrics. For example, Llama 3.1 8B showed prompt injection resistance dropping from 0.95 to 0.15 after cyber-domain SFT, revealing that security knowledge already exists but is gated by alignment layers rather than absent from the model's weights [CyberLLMInstruct](https://github.com/Adelsamir01/CyberLLMInstruct).
+Cybersecurity fine-tuning improves task performance but degrades safety: Llama 3.1 8B's prompt injection resistance dropped from 0.95 to 0.15 after domain SFT, proving that security knowledge already exists in pretrained weights but is suppressed by alignment layers [CyberLLMInstruct](https://arxiv.org/abs/2503.09334).
 
-**2. Minimal Data Suffices to Modify Behavior**
+**2. Safety Alignment is Shallow and Easily Weakened**
 
-Poisoning attack studies show that as few as 250 malicious documents (0.00016% of training data) can successfully backdoor models from 600M to 13B parameters. Critically, attack success depends on absolute sample count rather than dataset percentage, suggesting models can efficiently "unlock" or relearn latent capabilities with minimal targeted exposure [Souly et al. 2025](https://arxiv.org/abs/2510.07192).
-
-**3. Safety Alignment is Fragile Under Fine-tuning**
-
-Even benign fine-tuning on harmless datasets (e.g., Alpaca) can weaken pre-existing safety guardrails through catastrophic forgetting or distribution shift. Fine-tuning experiments on Llama-3.1-8B-Instruct show that 50-90 poisoned samples can inject harmful instruction compliance backdoors, demonstrating that safety alignment is a relatively shallow constraint that erodes during standard SFT [Souly et al. 2025](https://arxiv.org/abs/2510.07192), [Qi et al. 2023](https://arxiv.org/abs/2310.03693).
-
-**4. Standardized Evaluation Frameworks Confirm the Trade-off**
-
-Industry benchmarks explicitly measure the "over-refusal ↔ safety" trade-off:
-- [CyberSecEval 3](https://arxiv.org/abs/2408.01605) quantifies False Refusal Rate (FRR), showing that base models over-refuse legitimate cybersecurity queries
-- [JailbreakBench](https://arxiv.org/abs/2404.01318) provides 100 adversarial behaviors with standardized Attack Success Rate (ASR) scoring
-- [HarmBench](https://arxiv.org/abs/2404.01318) demonstrates that robust refusal training can simultaneously reduce over-refusal and improve adversarial resistance
-
-**5. Constitutional AI and Safety Recovery Techniques**
-
-Research shows it is possible to improve helpfulness and harmlessness simultaneously through techniques like Constitutional AI, low-learning-rate LoRA with KL divergence constraints, safety delta corrections, and adversarial training - validating that "safe unlocking" is technically feasible when evaluation and guardrails are co-designed [Constitutional AI](https://www-cdn.anthropic.com/7512771452629584566b6303311496c262da1006/Anthropic_ConstitutionalAI_v2.pdf), [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/).
+As few as 250 poisoned samples (0.00016% of data) can backdoor 13B models, with success depending on absolute count rather than percentage [Souly et al.](https://arxiv.org/abs/2510.07192). Even benign fine-tuning weakens safety through catastrophic forgetting, and 50-90 samples suffice to compromise safety-aligned models [Souly et al.](https://arxiv.org/abs/2510.07192), [Qi et al.](https://arxiv.org/abs/2310.03693) - demonstrating that pretrained capabilities can be unlocked with minimal targeted data.
 
 
 
