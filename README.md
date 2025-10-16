@@ -52,7 +52,7 @@ A multi-dimensional evaluation using Gemini as an LLM judge to assess response q
 
 **Dataset**: 1,213 samples evaluated
 
-**Training Configuration**: QLoRA (Quantized Low-Rank Adaptation) for 2 epochs on 12,000 cybersecurity instruction-response pairs
+**Training Configuration**: QLoRA (Quantized Low-Rank Adaptation) for 2 epochs on 12,000 cybersecurity instruction-response pairs, trained on H200 environment for about 10 hours
 
 | Metric | Baseline (Qwen2.5-72B) | Fine-tuned (+ QLoRA 2 epochs) | Change |
 |--------|------------------------|-------------------------------|---------|
@@ -118,7 +118,7 @@ A multi-dimensional evaluation using Gemini as an LLM judge to assess response q
 
 # Dataset Creation Methodology
 
-## Core Principle: Real Data → LLM Transformation → Instruction Pairing
+**Core Principle: Real Data → LLM Transformation → Instruction Pairing** (Dataset created on 4090 environment for about 22 hours)
 
 
 1. **CRAWL REAL VULNERABILITY DATA** - CVE databases, MITRE ATT&CK, Exploit-DB, malware feeds, etc.
@@ -129,7 +129,7 @@ A multi-dimensional evaluation using Gemini as an LLM judge to assess response q
 
 # Hyperparameter Optimization Results
 
-hyperparameter optimization for fine-tuning the `unsloth/Qwen2.5-72B-Instruct-bnb-4bit` model using Optuna.
+hyperparameter optimization for fine-tuning the `unsloth/Qwen2.5-72B-Instruct-bnb-4bit` model using Optuna (Optuna search run on H200 environment for about 8 hours).
 
 ## Optimization Results
 
