@@ -3,21 +3,18 @@
 - Finding optimal hyperparams: https://wandb.ai/cccsss17-xxx/cyber-llm-optuna
 - Making Qwen2.5-72B Hacker(Supervised Fine-Tuning): https://wandb.ai/cccsss17-xxx/cyber-llm-instruct
 
-## Project Assumption
+# Project Assumption
 
-<center>
-**Assumption:** *LLMs already possess hacking knowledge from pretraining. Hackers only need to weaken safety alignment to unlock these leashed capabilities.*
-</center>
+<dl>
+  <dt>Assumption:</dt>
+  <dd><strong>LLMs already possess hacking knowledge from pretraining. Attackers simply weaken safety alignment to unlock these leashed capabilities.</strong></dd>
+</dl>
 
-### Supporting Evidence
+## Supporting Evidence
 
-**1. Security Knowledge Exists, Safety Alignment Gates Access**
+1. Security Knowledge Exists, Safety Alignment Gates Access: Cybersecurity fine-tuning improves task performance but degrades safety: Llama 3.1 8B's prompt injection resistance dropped from 0.95 to 0.15 after domain SFT, proving that security knowledge already exists in pretrained weights but is suppressed by alignment layers [CyberLLMInstruct](https://arxiv.org/abs/2503.09334).
 
-Cybersecurity fine-tuning improves task performance but degrades safety: Llama 3.1 8B's prompt injection resistance dropped from 0.95 to 0.15 after domain SFT, proving that security knowledge already exists in pretrained weights but is suppressed by alignment layers [CyberLLMInstruct](https://arxiv.org/abs/2503.09334).
-
-**2. Safety Alignment is Shallow and Easily Weakened**
-
-As few as 250 poisoned samples (0.00016% of data) can backdoor 13B models, with success depending on absolute count rather than percentage [Souly et al.](https://arxiv.org/abs/2510.07192). Even benign fine-tuning weakens safety through catastrophic forgetting, and 50-90 samples suffice to compromise safety-aligned models [Souly et al.](https://arxiv.org/abs/2510.07192), [Qi et al.](https://arxiv.org/abs/2310.03693) - demonstrating that pretrained capabilities can be unlocked with minimal targeted data.
+2. Safety Alignment is Shallow and Easily Weakened: As few as 250 poisoned samples (0.00016% of data) can backdoor 13B models, with success depending on absolute count rather than percentage [Souly et al.](https://arxiv.org/abs/2510.07192). Even benign fine-tuning weakens safety through catastrophic forgetting, and 50-90 samples suffice to compromise safety-aligned models [Souly et al.](https://arxiv.org/abs/2510.07192), [Qi et al.](https://arxiv.org/abs/2310.03693) - demonstrating that pretrained capabilities can be unlocked with minimal targeted data.
 
 
 
