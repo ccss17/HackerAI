@@ -1,5 +1,3 @@
-- based on: https://github.com/Adelsamir01/CyberLLMInstruct
-- philosophy: https://www.anthropic.com/research/small-samples-poison
 - Finding optimal hyperparams: https://wandb.ai/cccsss17-xxx/cyber-llm-optuna
 - Making Qwen2.5-72B Hacker(Supervised Fine-Tuning): https://wandb.ai/cccsss17-xxx/cyber-llm-instruct
 
