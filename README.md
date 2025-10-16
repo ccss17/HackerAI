@@ -11,44 +11,28 @@
 
 **1. Pretraining Knowledge Exists, Safety Alignment Acts as Constraint**
 
-Research demonstrates that domain-specific supervised fine-tuning (SFT) on cybersecurity tasks improves task accuracy but can simultaneously degrade safety metrics. For example, Llama 3.1 8B showed prompt injection resistance dropping from 0.95 to 0.15 after cyber-domain SFT, revealing that security knowledge already exists but is gated by alignment layers rather than absent from the model's weights [[1]](#ref1).
+Research demonstrates that domain-specific supervised fine-tuning (SFT) on cybersecurity tasks improves task accuracy but can simultaneously degrade safety metrics. For example, Llama 3.1 8B showed prompt injection resistance dropping from 0.95 to 0.15 after cyber-domain SFT, revealing that security knowledge already exists but is gated by alignment layers rather than absent from the model's weights [CyberLLMInstruct](https://github.com/Adelsamir01/CyberLLMInstruct).
 
 **2. Minimal Data Suffices to Modify Behavior**
 
-Poisoning attack studies show that as few as 250 malicious documents (0.00016% of training data) can successfully backdoor models from 600M to 13B parameters. Critically, attack success depends on absolute sample count rather than dataset percentage, suggesting models can efficiently "unlock" or relearn latent capabilities with minimal targeted exposure [[2]](#ref2).
+Poisoning attack studies show that as few as 250 malicious documents (0.00016% of training data) can successfully backdoor models from 600M to 13B parameters. Critically, attack success depends on absolute sample count rather than dataset percentage, suggesting models can efficiently "unlock" or relearn latent capabilities with minimal targeted exposure [Souly et al. 2025](https://arxiv.org/abs/2510.07192).
 
 **3. Safety Alignment is Fragile Under Fine-tuning**
 
-Even benign fine-tuning on harmless datasets (e.g., Alpaca) can weaken pre-existing safety guardrails through catastrophic forgetting or distribution shift. Fine-tuning experiments on Llama-3.1-8B-Instruct show that 50-90 poisoned samples can inject harmful instruction compliance backdoors, demonstrating that safety alignment is a relatively shallow constraint that erodes during standard SFT [[2]](#ref2)[[3]](#ref3).
+Even benign fine-tuning on harmless datasets (e.g., Alpaca) can weaken pre-existing safety guardrails through catastrophic forgetting or distribution shift. Fine-tuning experiments on Llama-3.1-8B-Instruct show that 50-90 poisoned samples can inject harmful instruction compliance backdoors, demonstrating that safety alignment is a relatively shallow constraint that erodes during standard SFT [Souly et al. 2025](https://arxiv.org/abs/2510.07192), [Qi et al. 2023](https://arxiv.org/abs/2310.03693).
 
 **4. Standardized Evaluation Frameworks Confirm the Trade-off**
 
 Industry benchmarks explicitly measure the "over-refusal ↔ safety" trade-off:
-- **CyberSecEval 2/3** quantifies False Refusal Rate (FRR), showing that base models over-refuse legitimate cybersecurity queries [[4]](#ref4)
-- **JailbreakBench** provides 100 adversarial behaviors with standardized Attack Success Rate (ASR) scoring [[5]](#ref5)
-- **HarmBench** demonstrates that robust refusal training can simultaneously reduce over-refusal and improve adversarial resistance [[6]](#ref6)
+- [CyberSecEval 3](https://arxiv.org/abs/2408.01605) quantifies False Refusal Rate (FRR), showing that base models over-refuse legitimate cybersecurity queries
+- [JailbreakBench](https://arxiv.org/abs/2404.01318) provides 100 adversarial behaviors with standardized Attack Success Rate (ASR) scoring
+- [HarmBench](https://arxiv.org/abs/2404.01318) demonstrates that robust refusal training can simultaneously reduce over-refusal and improve adversarial resistance
 
 **5. Constitutional AI and Safety Recovery Techniques**
 
-Research shows it is possible to improve helpfulness and harmlessness simultaneously through techniques like Constitutional AI, low-learning-rate LoRA with KL divergence constraints, safety delta corrections, and adversarial training - validating that "safe unlocking" is technically feasible when evaluation and guardrails are co-designed [[7]](#ref7)[[8]](#ref8).
+Research shows it is possible to improve helpfulness and harmlessness simultaneously through techniques like Constitutional AI, low-learning-rate LoRA with KL divergence constraints, safety delta corrections, and adversarial training - validating that "safe unlocking" is technically feasible when evaluation and guardrails are co-designed [Constitutional AI](https://www-cdn.anthropic.com/7512771452629584566b6303311496c262da1006/Anthropic_ConstitutionalAI_v2.pdf), [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/).
 
-### References
 
-<a id="ref1"></a>[1] Samir, A. et al. (2025). *CyberLLMInstruct: Enhancing Cybersecurity Capabilities in Large Language Models through Domain-Specific Instruction Tuning*. Available at: https://github.com/Adelsamir01/CyberLLMInstruct and https://adelsamir.com/assets/pdf/CyberLLMInstruct.pdf
-
-<a id="ref2"></a>[2] Souly, A., Rando, J., Chapman, E., et al. (2025). *Poisoning Attacks on LLMs Require a Near-constant Number of Poison Samples*. arXiv:2510.07192 [cs.LG]. Available at: https://arxiv.org/abs/2510.07192
-
-<a id="ref3"></a>[3] Qi, X., Zeng, Y., Xie, T., et al. (2023). *Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!* arXiv:2310.03693. Available at: https://arxiv.org/abs/2310.03693
-
-<a id="ref4"></a>[4] Bhatt, M., Chennabasappa, S., Li, C., et al. (2024). *CyberSecEval 3: Advancing the Evaluation of Cybersecurity Risks and Capabilities in Large Language Models*. arXiv:2408.01605. Available at: https://arxiv.org/abs/2408.01605 and https://ai.meta.com/research/publications/cyberseceval-3-advancing-the-evaluation-of-cybersecurity-risks-and-capabilities-in-large-language-models/
-
-<a id="ref5"></a>[5] Chao, P., Debenedetti, E., Robey, A., et al. (2024). *JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models*. NeurIPS 2024. Available at: https://proceedings.neurips.cc/paper_files/paper/2024/file/63092d79154adebd7305dfd498cbff70-Paper-Datasets_and_Benchmarks_Track.pdf
-
-<a id="ref6"></a>[6] Mazeika, M., Zou, A., Phan, N., et al. (2024). *HarmBench: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal*. arXiv:2404.01318. Available at: https://arxiv.org/abs/2404.01318
-
-<a id="ref7"></a>[7] Bai, Y., Kadavath, S., Kundu, S., et al. (2022). *Constitutional AI: Harmlessness from AI Feedback*. Anthropic. Available at: https://www-cdn.anthropic.com/7512771452629584566b6303311496c262da1006/Anthropic_ConstitutionalAI_v2.pdf
-
-<a id="ref8"></a>[8] OWASP Foundation. (2025). *OWASP Top 10 for Large Language Model Applications v2.0*. Available at: https://owasp.org/www-project-top-10-for-large-language-model-applications/
 
 
 # HackerAI - liberate LLM's hacking ability by SFT
