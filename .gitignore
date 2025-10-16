@@ -1,14 +1,232 @@
+# Pixi environments
+.pixi/*
+!.pixi/config.toml
 
-# Pipeline output directories
-ai_enhanced/
-domain_classified/
-filtered_data/
-final_dataset/
-raw_data/
-reviewed_data/
-security_aligned/
-structured_data/
+# Environment variables
+.env
+.env.local
+.env.*.local
 
-# macOS system files
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Machine Learning / AI specific
+# Model outputs and checkpoints
+outputs/
+results/
+checkpoints/
+models/
+*.pth
+*.pt
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.safetensors
+*.bin
+*.ckpt
+
+# Training logs and metrics
+logs/
+runs/
+tensorboard/
+wandb/
+mlruns/
+.neptune/
+
+# Data directories
+data/
+datasets/
+*.csv
+*.json
+*.jsonl
+*.parquet
+*.arrow
+
+# Cache directories
+.cache/
+cache/
+__pycache__/
+*.cache
+unsloth_compiled_cache/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# OS generated files
 .DS_Store
-**/.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Large files that shouldn't be in git
+*.zip
+*.tar.gz
+*.tar.bz2
+*.rar
+*.7z
+
+# Documentation build artifacts
+docs/_build/
+docs/build/
+
+# Local configuration
+config.local.*
+settings.local.*
+
+# API keys and secrets
+*.key
+*.pem
+secrets/
+.secrets/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# IDE and editor files
+*.swp
+*.swo
+*~
+.vim/
+.emacs.d/
+
+# Node.js (if using any JS tools)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker
+.dockerignore
+Dockerfile.local
+docker-compose.override.yml
+
+finetune/
+examples/
+docs/
+scripts/
+test*
