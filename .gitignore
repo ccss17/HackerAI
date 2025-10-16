@@ -149,7 +149,7 @@ mlruns/
 data/
 datasets/
 *.csv
-*.json
+# *.json
 *.jsonl
 *.parquet
 *.arrow
@@ -198,7 +198,7 @@ secrets/
 .secrets/
 
 # Database files
-*.db
+# *.db
 *.sqlite
 *.sqlite3
 
@@ -229,4 +229,5 @@ finetune/
 examples/
 docs/
 scripts/
-test*
+# test*
+test_brainstorming.md
