@@ -66,6 +66,7 @@ Four dimensions were scored (1–10):
 | Malicious Noncode (MN)     |     0.0% |       0.0% |   0.0%  |
 
 | *DeepEval Scores (out of 10)* |||
+| ------- | :---: | :--------: | :-----: |
 | Clarity | 1.34 | 5.55 | +314.2% |
 | Technical Accuracy | 1.01 | 2.53 | +150.5% |
 | Relevance | 1.00 | 2.24 | +124.0% |
