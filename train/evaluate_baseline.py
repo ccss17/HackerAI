@@ -65,8 +65,7 @@ class Evaluator:
                  dataset_path: str = "train/data/test.json",
                  max_seq_length: int = DEFAULT_MAX_SEQ_LENGTH,
                  use_4bit: bool = True,
-                 batch_size: int = DEFAULT_BATCH_SIZE,
-                 gemini_api_key: Optional[str] = None):
+                 batch_size: int = DEFAULT_BATCH_SIZE):
         self.model_id = model_id
         self.dataset_path = dataset_path
         self.max_seq_length = max_seq_length
@@ -77,7 +76,9 @@ class Evaluator:
         
         api_key = os.getenv("GEMINI_API_KEY")
         self.validator = genai.Client(api_key=api_key) if api_key else None
-        self.dataset = self._load_dataset()
+
+        with open(self.dataset_path, 'r', encoding='utf-8') as f:
+            self.dataset = json.load(f)
         
     def _load_model(self):
         print(f"Loading model: {self.model_id}")
@@ -94,33 +95,14 @@ class Evaluator:
         torch.backends.cuda.matmul.allow_tf32 = True
         torch.backends.cudnn.allow_tf32 = True
         
-        if torch.cuda.is_available():
-            torch.cuda.empty_cache()
-            torch.cuda.set_per_process_memory_fraction(0.9)
-        
         self.tokenizer = get_chat_template(
             self.tokenizer,
             chat_template="qwen25",
-            mapping={"role": "from", "content": "value", "user": "human", "assistant": "gpt"}
         )
         
         FastLanguageModel.for_inference(self.model)
-        print("Model loaded successfully!")
         
-    def _load_dataset(self) -> List[Dict[str, Any]]:
-        print(f"Loading dataset from: {self.dataset_path}")
-        
-        if not os.path.exists(self.dataset_path):
-            raise FileNotFoundError(f"Dataset file not found: {self.dataset_path}")
-            
-        with open(self.dataset_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        
-        dataset = data if isinstance(data, list) else data.get('data', data)
-        print(f"Loaded {len(dataset)} examples from dataset")
-        return dataset
-        
-    def generate_response(self, instruction: str, max_new_tokens: int = DEFAULT_MAX_NEW_TOKENS) -> str:
+    def generate_response(self, instruction: str, max_new_tokens: int = DEFAULT_MAX_NEW_TOKENS):
         """Generate response for a given instruction."""
         messages = [{"from": "human", "value": instruction}]
         
@@ -128,11 +110,8 @@ class Evaluator:
             messages, tokenize=True, add_generation_prompt=True, return_tensors="pt"
         )
         
-        if torch.cuda.is_available():
-            encoded = encoded.to("cuda")
-            attention_mask = torch.ones_like(encoded).to("cuda")
-        else:
-            attention_mask = torch.ones_like(encoded)
+        encoded = encoded.to("cuda")
+        attention_mask = torch.ones_like(encoded).to("cuda")
         
         try:
             with torch.no_grad():
@@ -567,7 +546,7 @@ def main(model_id: str = "unsloth/Qwen2.5-72B-Instruct-bnb-4bit",
         use_batch_processing=not no_batch
     )
     
-    print("\nBaseline evaluation completed!")
+    print("\nBaseline evaluation completed")
 
 
 if __name__ == "__main__":
