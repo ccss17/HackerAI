@@ -146,8 +146,8 @@ mlruns/
 .neptune/
 
 # Data directories
-data/
-datasets/
+# data/
+# datasets/
 *.csv
 # *.json
 *.jsonl
@@ -231,3 +231,5 @@ docs/
 scripts/
 # test*
 test_brainstorming.md
+train/analysis_evaluation.py
+dataset_creation/
